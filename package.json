@@ -1,0 +1,26 @@
+{
+  "name": "cate-demo-shopping-cart",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^3.1.1"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.9.0",
+    "@primevue/nuxt-module": "^4.3.3",
+    "@primevue/themes": "^4.3.3",
+    "nuxt": "^3.15.4",
+    "pinia": "^2.3.1",
+    "primevue": "^4.3.3",
+    "vue": "^3.5.13"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
