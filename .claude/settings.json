@@ -4,10 +4,14 @@
   ],
   "permissions": {
     "allow": [
+      "Bash(git:*)",
       "Bash(git *)",
+      "Bash(cd * && git *)",
       "Bash(GIT_COMMITTER_NAME=* git:*)",
       "Bash(GIT_TERMINAL_PROMPT=0 git:*)",
       "Bash(npm *)",
+      "Bash(npx vitest *)",
+      "Bash(cd * && npx vitest *)",
       "Bash(ls:*)",
       "Bash(tree:*)",
       "Bash(jq:*)",
