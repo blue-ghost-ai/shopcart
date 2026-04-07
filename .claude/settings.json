@@ -3,6 +3,7 @@
     "leftenant"
   ],
   "permissions": {
+    "defaultMode": "acceptEdits",
     "allow": [
       "Bash(git:*)",
       "Bash(git *)",
