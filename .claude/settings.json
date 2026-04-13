@@ -23,19 +23,5 @@
       "WebSearch",
       "mcp__leftenant__*"
     ]
-  },
-  "hooks": {
-    "Notification": [
-      {
-        "matcher": "permission_prompt|structured_choice|idle_prompt",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "node \"$CLAUDE_PROJECT_DIR/.claude/hooks/cate/needs-attention.mjs\"",
-            "async": true
-          }
-        ]
-      }
-    ]
   }
 }

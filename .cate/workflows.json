@@ -307,6 +307,21 @@
       "tab": {
         "ephemeral": {}
       }
+    },
+    "connect_tracker": {
+      "name": "Connect Tracker",
+      "description": "Connect to an issue tracker",
+      "prompt": "commands/connect-tracker.md",
+      "tab": {
+        "ephemeral": {}
+      },
+      "parameters": {
+        "tracker_preference": {
+          "type": "string",
+          "required": true,
+          "description": "Tracker provider: github, jira, or linear"
+        }
+      }
     }
   },
   "queue": {
