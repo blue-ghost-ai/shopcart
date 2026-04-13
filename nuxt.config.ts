@@ -20,6 +20,7 @@ const CateDemoPreset = definePreset(Aura, {
 });
 
 export default defineNuxtConfig({
+  telemetry: false,
   modules: ['@pinia/nuxt', '@primevue/nuxt-module'],
 
   primevue: {
