@@ -2,35 +2,105 @@
 
 Tags: cart, vue, primevue, pinia, fix, ui
 
-## Overview
+## Pre-Written Issue
 
-The cart page (`pages/index.vue`) has three intentional gaps where UI components are rendered but not connected to the Pinia store. All three store actions (`updateQuantity`, `removeFromCart`, `setShippingOption`) already exist and are fully tested in `stores/cart.test.ts`. The fixes are template-only changes in `pages/index.vue` — no new store logic, no new types, no new files.
+This file contains a ready-to-use issue for fixing all three cart page gaps. **Use the following text as your issue title and body — do not rewrite or re-analyze.**
 
-## Gap 1: Quantity Stepper (disabled, not wired)
+### Issue Title
 
-**File:** `pages/index.vue`, lines 59-67
-**Problem:** The `<InputNumber>` has `:disabled="true"` and no `@update:modelValue` handler.
-**Fix:**
-- Remove `:disabled="true"`
-- Add `@update:model-value="cart.updateQuantity(item.id, $event)"`
+```
+feat(cart): connect quantity stepper, remove button, and shipping selector to store
+```
 
-**Store action:** `cart.updateQuantity(itemId: string, newQty: number)` — clamps to min 1, floors fractional values.
+### Issue Body
 
-## Gap 2: Remove Button (no-op click handler)
+````markdown
+## Acceptance Criteria
+- Quantity stepper increments/decrements item quantity and updates subtotal and total
+- Remove button removes the item from the cart
+- Shipping selector dropdown allows choosing between Standard, Express, and Overnight shipping and updates the total
 
-**File:** `pages/index.vue`, lines 79-86 (button), lines 10-13 (handler)
-**Problem:** `handleRemove()` is a no-op function. The button calls it but nothing happens.
-**Fix:**
-- Replace `@click="handleRemove(item.id)"` with `@click="cart.removeFromCart(item.id)"`
-- Delete the `handleRemove` function from `<script setup>` (lines 10-13)
+## UI Mockup
 
-**Store action:** `cart.removeFromCart(itemId: string)` — splices the item from the array.
+Before (current — stepper disabled, remove is no-op, shipping is static text):
+```
+┌─────────────────────────────────────────────────────┐
+│ 🦆  Rubber Duck Debugger              Qty           │
+│      $12.99 each                   [ 2 ] (disabled) │
+│                                    $25.98  [✕]      │
+├─────────────────────────────────────────────────────┤
+│  Shipping                                           │
+│  ┌───────────────────────────────────┐              │
+│  │ Standard Shipping — $5.99 (text) │              │
+│  └───────────────────────────────────┘              │
+└─────────────────────────────────────────────────────┘
+```
 
-## Gap 3: Shipping Selector (static text instead of dropdown)
+After (fixed — stepper active, remove works, shipping is dropdown):
+```
+┌─────────────────────────────────────────────────────┐
+│ 🦆  Rubber Duck Debugger              Qty           │
+│      $12.99 each                 [−][ 2 ][+]       │
+│                                    $25.98  [✕]      │
+├─────────────────────────────────────────────────────┤
+│  Shipping                                           │
+│  ┌───────────────────────────────────────────┐      │
+│  │ Standard Shipping                    ▾    │      │
+│  └───────────────────────────────────────────┘      │
+└─────────────────────────────────────────────────────┘
+```
 
-**File:** `pages/index.vue`, lines 108-115
-**Problem:** A static `<span class="shipping-static">Standard Shipping — $5.99</span>` instead of a PrimeVue `<Select>` component.
-**Fix:** Replace the `<span>` with:
+## Context
+
+All three Pinia store actions already exist and are fully tested in `stores/cart.test.ts`. No new store logic, types, or files are needed — every fix is a template-only change in `pages/index.vue`.
+
+### Fix 1 — Quantity stepper (`pages/index.vue`)
+
+In the `<InputNumber>` component (around line 59), make these two changes:
+
+1. **Remove** the line `:disabled="true"`
+2. **Add** the line `@update:model-value="cart.updateQuantity(item.id, $event)"`
+
+The component should look like:
+```vue
+<InputNumber
+  :model-value="item.quantity"
+  :min="1"
+  :max="99"
+  show-buttons
+  button-layout="horizontal"
+  :input-style="{ width: '3rem', textAlign: 'center' }"
+  @update:model-value="cart.updateQuantity(item.id, $event)"
+/>
+```
+
+### Fix 2 — Remove button (`pages/index.vue`)
+
+1. **Change** the `@click` handler on the `<Button>` (around line 85) from:
+   ```vue
+   @click="handleRemove(item.id)"
+   ```
+   to:
+   ```vue
+   @click="cart.removeFromCart(item.id)"
+   ```
+
+2. **Delete** the dead `handleRemove` function from `<script setup>` (lines 10-13):
+   ```ts
+   // DELETE these lines:
+   function handleRemove(_itemId: string): void {
+     // no-op — waiting to be connected to the store
+   }
+   ```
+
+### Fix 3 — Shipping selector (`pages/index.vue`)
+
+**Replace** the static `<span>` (around line 114):
+```vue
+<span class="shipping-static">Standard Shipping — $5.99</span>
+```
+
+with a PrimeVue `<Select>`:
 ```vue
 <Select
   :model-value="cart.selectedShippingOptionId"
@@ -40,24 +110,17 @@ The cart page (`pages/index.vue`) has three intentional gaps where UI components
   @update:model-value="cart.setShippingOption($event)"
 />
 ```
-Remove the `.shipping-static` CSS rule (line ~372) since it's no longer used.
 
-**Store action:** `cart.setShippingOption(optionId: string)` — validates the option exists before setting.
-**Store getter:** `cart.shippingOptions` — array of `{ id, label, price }`.
-**Store state:** `cart.selectedShippingOptionId` — defaults to `'standard'`.
+**Delete** the unused `.shipping-static` CSS rule from the `<style scoped>` block:
+```css
+/* DELETE these lines: */
+.shipping-static {
+  font-size: 0.875rem;
+  color: var(--p-surface-300, #d4d4d8);
+}
+```
 
-## Key Files
-
-| File | Role |
-|---|---|
-| `pages/index.vue` | All three fixes happen here (template + script) |
-| `stores/cart.ts` | Store with existing actions — no changes needed |
-| `stores/cart.test.ts` | Existing tests for all three actions — all pass |
-| `types/index.ts` | `CartItem` and `ShippingOption` types — no changes needed |
-
-## Testing
-
-The store actions are already fully tested. The fixes are wiring-only (connecting existing UI to existing store methods), so no new unit tests are strictly required. A manual smoke test confirms:
-1. Quantity stepper increments/decrements and updates subtotal
-2. Remove button removes the item from the list
-3. Shipping dropdown changes the shipping cost and total
+## Research
+Read before starting:
+- `.cate/research/cart-page-gaps.md` — full analysis of all three gaps with exact code changes
+````

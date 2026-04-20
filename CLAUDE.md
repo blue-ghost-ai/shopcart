@@ -5,7 +5,7 @@ Nuxt 3 / Vue 3 / Pinia / PrimeVue 4 shopping cart demo app.
 ## Known Issues
 
 The cart page has three intentional gaps documented in the README.
-**A complete analysis with exact fixes is in `.cate/research/cart-page-gaps.md`** — read it before planning or implementing any cart fixes.
+**`.cate/research/cart-page-gaps.md` contains a pre-written issue (title + body) ready to use.** When creating an issue for the cart fixes, use that text verbatim — do not re-analyze or rewrite it.
 
 ## Tech Stack
 
