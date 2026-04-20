@@ -15,6 +15,10 @@ The cart page has three intentional gaps to fix:
 3. **Shipping selector** (`pages/index.vue`) — static `<span>` instead of a PrimeVue `<Select>`
    - TODO: Replace with `<Select>` bound to `cart.shippingOptions`
 
+## Pre-Seeded Research
+
+`.cate/research/cart-page-gaps.md` contains a pre-written analysis and issue body for the three gaps above. This is the same output a Cate build/plan agent would produce after analyzing the codebase — we've just committed it ahead of time so the quickstart doesn't spend minutes re-deriving what's already known.
+
 ## Running Locally
 
 ```bash
