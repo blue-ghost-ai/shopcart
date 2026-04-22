@@ -131,7 +131,7 @@ function handleRemove(_itemId: string): void {
               />
 
               <p class="cart-summary-note">
-                🔒 Secure checkout &nbsp;·&nbsp; Free returns on all orders
+                🔒 Secure checkout &nbsp;·&nbsp; Free shipping on all orders
               </p>
             </div>
           </div>
