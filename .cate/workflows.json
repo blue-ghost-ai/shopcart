@@ -19,12 +19,12 @@
     {
       "id": "ready",
       "name": "To Do",
-      "color": "#3b82f6"
+      "color": "#969696"
     },
     {
       "id": "in_progress",
       "name": "In Progress",
-      "color": "#f59e0b"
+      "color": "#3D7BF8"
     },
     {
       "id": "in_review",
@@ -34,12 +34,12 @@
     {
       "id": "human_review",
       "name": "In Review",
-      "color": "#ec4899"
+      "color": "#22c55e"
     },
     {
       "id": "done",
       "name": "Done",
-      "color": "#22c55e"
+      "color": "#969696"
     }
   ],
   "commands": {
